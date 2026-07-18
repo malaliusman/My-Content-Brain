@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(cuid())
+  email     String     @unique
+  name      String?
+  avatar    String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  contents      Content[]
+  conversations Conversation[]
+  uploadedFiles UploadedFile[]
+  aiGenerations AIGeneration[]
+
+  @@map("users")
+}
+
+model Content {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  content   String   @db.Text
+  type      String   // blog, story, linkedin, facebook, wordpress, substack, quote, caption, hashtag, seo_title, meta_description
+  tags      String[] @default([])
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@map("contents")
+}
+
+model Conversation {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question  String
+  answer    String   @db.Text
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@map("conversations")
+}
+
+model UploadedFile {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fileName  String
+  fileType  String   // pdf, docx, txt, markdown
+  fileSize  Int
+  fileUrl   String
+  content   String?  @db.Text // Extracted text content
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@map("uploaded_files")
+}
+
+model AIGeneration {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  prompt      String   @db.Text
+  output      String   @db.Text
+  type        String   // blog, story, linkedin, facebook, wordpress, substack, etc.
+  tokensUsed  Int
+  costUSD     Float?
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@map("ai_generations")
+}

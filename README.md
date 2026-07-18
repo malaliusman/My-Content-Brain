@@ -1,130 +1,138 @@
-# My Content Brain 🧠
+# My Content Brain
 
-An AI-powered personal writing assistant and knowledge management platform that helps users store, organize, and create content such as articles, blogs, stories, and social media posts.
+An AI-powered content creation and knowledge management platform built with Next.js 15, TypeScript, Supabase, and OpenAI.
 
-## ✨ Features
+## Features
 
-### 🤖 AI Knowledge Bot
-- Answer questions using ONLY your uploaded content
-- Source attribution for every answer
-- No hallucinations - says "I don't know" when unsure
-- Full-text and semantic search across all content
-- Gravatar integration for personalized user profiles
+### Current Phase
+- ✅ Project initialization with Next.js 15 + TypeScript
+- ✅ Tailwind CSS setup
+- ✅ ESLint + Prettier configuration
+- ✅ Supabase integration (auth & database)
+- ✅ Prisma ORM setup
+- ✅ OpenAI API integration
 
-### ✍️ AI Writing Assistant
-Create content for:
-- Blog articles & WordPress posts
-- LinkedIn articles & Substack newsletters
-- Social media (Twitter/X, Threads, Facebook, Instagram)
-- Email newsletters & Quotes
-- SEO meta descriptions, titles, hooks, hashtags
+### Planned Features
 
-### 🎨 Writing Styles
-Professional | Inspirational | Storytelling | Thought-provoking | Philosophical | Witty | Sarcastic | Humorous | Corporate | Motivational | Gen Z | Formal
+#### Phase 1: Core Pages
+- [ ] Authentication (/login, /register, /profile)
+- [ ] Dashboard (/dashboard)
+- [ ] Library (/library)
+- [ ] Settings (/settings)
 
-### 🛠️ Content Tools
-- Grammar correction & plagiarism-free rewriting
-- Expand/Shorten content
-- Summarize articles
-- Generate FAQs & bullet points
-- Reading time & word count estimation
-- SEO optimization
-- Internal linking suggestions
-- Content analytics & performance metrics
+#### Phase 2: AI Writer
+Generate content in multiple formats:
+- [ ] Blog articles
+- [ ] Stories
+- [ ] LinkedIn posts
+- [ ] Facebook posts
+- [ ] WordPress articles
+- [ ] Substack newsletters
+- [ ] Quotes
+- [ ] Captions
+- [ ] Hashtags
+- [ ] SEO titles
+- [ ] Meta descriptions
 
-### 📊 Dashboard Analytics
-- Total articles, stories, views, subscribers
-- Most popular content
-- Engagement & search analytics
-- Content performance metrics
+#### Phase 3: Knowledge Brain
+- [ ] File upload (PDF, DOCX, TXT, Markdown)
+- [ ] Vector embeddings
+- [ ] Semantic search
+- [ ] Content Q&A
+- [ ] Content rewriting
 
-## 🏗️ Project Structure
+#### Phase 4: Publishing & Analytics
+- [ ] WordPress publishing
+- [ ] Facebook publishing
+- [ ] LinkedIn publishing
+- [ ] Analytics dashboard
 
-```
-my-content-brain/
-├── frontend/          # Next.js + React application
-├── backend/           # Node.js Express API
-├── ai/                # AI services & LLM prompts
-├── database/          # PostgreSQL schema & migrations
-├── docs/              # Project documentation
-├── docker/            # Docker configurations
-├── .github/           # CI/CD workflows & templates
-└── config/            # Environment & deployment configs
-```
+#### Phase 5: Advanced Features
+- [ ] Dark mode
+- [ ] Mobile-responsive UI
+- [ ] AI content memory
+- [ ] Subscription system
 
-## 🚀 Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| Frontend | Next.js 14, React 18, Tailwind CSS |
-| Backend | Node.js, Express, TypeScript |
-| Database | PostgreSQL + pgvector (Supabase) |
-| AI | OpenAI GPT-4, Embeddings, LangChain |
-| Auth | JWT + Google OAuth + Gravatar |
-| Storage | Cloudinary |
-| Deployment | Vercel (frontend) + Railway (backend) |
-
-## 📚 Quick Start
+## Getting Started
 
 ### Prerequisites
 - Node.js 18+
-- pnpm 8+
-- PostgreSQL 16+
-- Docker (optional)
+- npm or yarn
+- Supabase account
+- OpenAI API key
 
 ### Installation
 
+1. Clone the repository:
 ```bash
-# Clone the repository
 git clone https://github.com/malaliusman/my-content-brain.git
 cd my-content-brain
-
-# Install dependencies
-pnpm install
-
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your API keys
-
-# Start development servers
-pnpm dev
 ```
 
-### Services
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:5000
-- API Docs: http://localhost:5000/api/docs
+2. Install dependencies:
+```bash
+npm install
+```
 
-## 🔧 Configuration
+3. Set up environment variables:
+```bash
+cp .env.local.example .env.local
+```
 
-See [config/README.md](config/README.md) for detailed environment setup.
+Then fill in the values:
+- `NEXT_PUBLIC_SUPABASE_URL` - Your Supabase project URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Your Supabase anon key
+- `SUPABASE_SERVICE_ROLE_KEY` - Your Supabase service role key
+- `OPENAI_API_KEY` - Your OpenAI API key
+- `DATABASE_URL` - Your PostgreSQL connection string
+- `JWT_SECRET` - A secret key for JWT tokens
 
-## 📖 Documentation
+4. Set up the database:
+```bash
+npm run prisma:generate
+npm run prisma:migrate
+```
 
-- [Frontend Setup](docs/FRONTEND.md)
-- [Backend API Guide](docs/BACKEND.md)
-- [AI Services](docs/AI.md)
-- [Database Schema](database/README.md)
-- [Deployment Guide](docs/DEPLOYMENT.md)
+5. Run the development server:
+```bash
+npm run dev
+```
 
-## 🤝 Contributing
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+## Project Structure
 
-## 📄 License
+```
+my-content-brain/
+├── src/
+│   ├── app/              # Next.js app directory
+│   ├── components/       # React components
+│   ├── lib/              # Utility functions
+│   │   ├── supabase/     # Supabase client
+│   │   └── openai.ts     # OpenAI client
+│   └── types/            # TypeScript types
+├── prisma/
+│   └── schema.prisma     # Database schema
+└── public/               # Static assets
+```
 
-MIT License - see [LICENSE](LICENSE) file for details
+## Development
 
-## 🙏 Support
+```bash
+# Format code
+npm run format
 
-- Create an [issue](https://github.com/malaliusman/my-content-brain/issues) for bugs
-- Start a [discussion](https://github.com/malaliusman/my-content-brain/discussions) for questions
-- Star the repo if you like it ⭐
+# Lint code
+npm run lint
 
----
+# View Prisma Studio
+npm run prisma:studio
+```
 
-Built with ❤️ by [Your Name]
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+MIT
