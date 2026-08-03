@@ -28,7 +28,9 @@ export default function AIAgentsPage() {
             >
               <div className="text-2xl">{agent.emoji}</div>
               <h2 className="text-lg font-semibold">{agent.name}</h2>
-              <div className="mt-auto text-sm text-muted-foreground">Coming Soon</div>
+              <div className="mt-auto text-sm text-muted-foreground">
+                Coming Soon
+              </div>
             </div>
           ))}
         </div>
