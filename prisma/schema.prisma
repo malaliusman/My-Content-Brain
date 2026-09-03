@@ -18,10 +18,13 @@ model User {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 
-  contents      Content[]
-  conversations Conversation[]
-  uploadedFiles UploadedFile[]
-  aiGenerations AIGeneration[]
+  contents           Content[]
+  conversations      Conversation[]
+  uploadedFiles      UploadedFile[]
+  aiGenerations      AIGeneration[]
+  contentAnalytics   ContentAnalytics[]
+  aiUsageLogs        AIUsageLog[]
+  publishingLogs     PublishingLog[]
 
   @@map("users")
 }
@@ -37,6 +40,9 @@ model Content {
   published Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  contentAnalytics ContentAnalytics[]
+  publishingLogs   PublishingLog[]
 
   @@index([userId])
   @@map("contents")
@@ -82,4 +88,55 @@ model AIGeneration {
 
   @@index([userId])
   @@map("ai_generations")
+}
+
+model ContentAnalytics {
+  id        String   @id @default(cuid())
+  contentId String
+  userId    String
+  content   Content  @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  views     Int      @default(0)
+  likes     Int      @default(0)
+  shares    Int      @default(0)
+  comments  Int      @default(0)
+  platform  String?
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([contentId])
+  @@map("content_analytics")
+}
+
+model AIUsageLog {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  model         String
+  tokensUsed    Int
+  requestType   String
+  estimatedCost Float    @default(0)
+  createdAt     DateTime @default(now())
+
+  @@index([userId])
+  @@map("ai_usage_logs")
+}
+
+model PublishingLog {
+  id           String    @id @default(cuid())
+  userId       String
+  contentId    String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content      Content   @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  platform     String
+  status       String    @default("PENDING")
+  errorMessage String?
+  publishedAt  DateTime?
+  createdAt    DateTime  @default(now())
+
+  @@index([userId])
+  @@index([contentId])
+  @@map("publishing_logs")
 }
